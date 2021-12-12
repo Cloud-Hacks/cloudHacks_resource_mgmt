@@ -1,19 +1,19 @@
-FROM golang:1.16 as builder
+## Build
+
+FROM golang:1.16-alpine
 
 WORKDIR /res-mgmt
 
-ADD . /res-mgmt/
+COPY go.mod ./
+COPY go.sum ./
+RUN go mod download
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o main main.go
+COPY . .
 
+RUN go build -o /web4api
 
+## Deploy
 
-FROM alpine:3.7
+EXPOSE 8080
 
-RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
-
-WORKDIR /root
-
-COPY --from=builder /res-mgmt/. .
-
-CMD ["./main"]
+CMD [ "/web4api" ]
