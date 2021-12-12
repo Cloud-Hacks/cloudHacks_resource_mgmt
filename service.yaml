@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: res-mgmt-api-deployment
+  labels:
+    app: res-mgmt-api
+spec:
+  selector:
+    app: res-mgmt-api
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 5000

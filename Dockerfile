@@ -1,16 +1,19 @@
 FROM golang:1.16 as builder
 
-WORKDIR /resource-mgmt-api
+WORKDIR /res-mgmt
 
-COPY . .
+ADD . /res-mgmt/
 
-RUN go mod tidy
-RUN CGO_ENABLED=0 go build -o main .
+RUN CGO_ENABLED=0 GOOS=linux go build -o main main.go
 
-FROM alpine:3.15
 
-WORKDIR /resource-mgmt-api
 
-COPY --from=builder /resource-mgmt-api/. .
+FROM alpine:3.7
+
+RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
+
+WORKDIR /root
+
+COPY --from=builder /res-mgmt/. .
 
 CMD ["./main"]

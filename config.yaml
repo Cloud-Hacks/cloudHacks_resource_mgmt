@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: res-mgmt-api-deployment
+  labels:
+    app: res-mgmt-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: res-mgmt-api
+  template:
+    metadata:
+      labels:
+        app: res-mgmt-api
+    spec:
+      containers:
+      - name: res-mgmt-api
+        image: afzal442/res_mgmt_api:v1
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: res-mgmt-api-deployment
+  labels:
+    app: res-mgmt-api
+spec:
+  selector:
+    app: res-mgmt-api
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 5000
