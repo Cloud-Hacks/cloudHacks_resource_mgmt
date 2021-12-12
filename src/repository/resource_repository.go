@@ -8,7 +8,6 @@ import (
 	"resource-service/src/model"
 	"resource-service/src/service/dto"
 	"resource-service/utils/constants"
-	"resource-service/utils/database"
 	"resource-service/utils/filter"
 )
 
@@ -93,9 +92,9 @@ func (resourceRepository *ResourceRepository) GetListOfResources(data dto.Reques
 	//Store the resources
 	var resources []model.Resource
 	//Fetch the resources from Resource Table
-	if err := database.GetInstance().Select("id,title,category,status").Where("status != ? and title like \"%"+data.Filter.Query+"%\""+query, constants.DELETE).Limit(data.PageSize).Offset(data.PageNumber).Find(&resources).Error; err != nil {
-		return dto.ResponseGetListOfResourcesDTO{}, err
-	}
+	// if err := database.GetInstance().Select("id,title,category,status").Where("status != ? and title like \"%"+data.Filter.Query+"%\""+query, constants.DELETE).Limit(data.PageSize).Offset(data.PageNumber).Find(&resources).Error; err != nil {
+	// 	return dto.ResponseGetListOfResourcesDTO{}, err
+	// }
 	//Looping resources
 	for _, resource := range resources {
 		//Append data into list of Resources
@@ -107,9 +106,9 @@ func (resourceRepository *ResourceRepository) GetListOfResources(data dto.Reques
 		})
 	}
 	//Fetch the Total Record from Resource Table
-	if err := database.GetInstance().Model(&model.Resource{}).Select("id").Count(&totalRecord).Error; err != nil {
-		return dto.ResponseGetListOfResourcesDTO{}, err
-	}
+	// if err := database.GetInstance().Model(&model.Resource{}).Select("id").Count(&totalRecord).Error; err != nil {
+	// 	return dto.ResponseGetListOfResourcesDTO{}, err
+	// }
 	//Return response
 	return dto.ResponseGetListOfResourcesDTO{
 		TotalRecord:     totalRecord,
@@ -145,24 +144,7 @@ func (resourceRepository *ResourceRepository) GetResource(data dto.RequestGetRes
 
 //EditResource - Edit Resource based on ID from DB
 func (resourceRepository *ResourceRepository) EditResource(data dto.RequestEditResourceDTO) (string, error) {
-	//Check Resource exist or not
-	if err := database.GetInstance().Select("id").Where("id = ? and status != ?", data.ID, constants.DELETE).First(&model.Resource{}).Error; err != nil {
-		return "", err
-	}
-	//Edit Resource
-	if err := database.GetInstance().Where("id = ? and status != ?", data.ID, constants.DELETE).UpdateColumns(&model.Resource{
-		Title:     data.Title,
-		Category:  data.Category,
-		Types:     data.Type,
-		Status:    data.Status,
-		Content:   data.Content,
-		FileLink:  data.FileLink,
-		UpdatedBy: data.UpdatedBy,
-	}).Error; err != nil {
-		return "", err
-	}
-	//Check Images Linked exist
-	//To store imageLinks
+
 	var image model.Image
 	image.ResourceId = data.ID
 	image.Link = data.ImageLinks
@@ -172,32 +154,5 @@ func (resourceRepository *ResourceRepository) EditResource(data dto.RequestEditR
 	image.UpdatedBy = data.UpdatedBy
 	image.UpdatedAt = time.Now().UTC().Unix()
 
-	return "Success", nil
-}
-
-//DeleteResource - Delete Resource based on ID from DB
-func (resourceRepository *ResourceRepository) DeleteResource(data dto.RequestDeleteResourceDTO) (string, error) {
-
-	//Check Resource exist or not
-	if err := database.GetInstance().Select("id").Where("id = ? and status != ?", data.ID, constants.DELETE).First(&model.Resource{}).Error; err != nil {
-		return "", err
-	}
-	//Delete Resource
-	if err := database.GetInstance().Where("id = ? ", data.ID).UpdateColumns(&model.Resource{
-		Status:    constants.DELETE,
-		UpdatedBy: data.UpdatedBy,
-	}).Error; err != nil {
-		//return
-		return "", err
-	}
-	//Delete linked images
-	if err := database.GetInstance().Where("resource_id = ? ", data.ID).UpdateColumns(&model.Image{
-		Status:    constants.UN_USED,
-		UpdatedBy: data.UpdatedBy,
-	}).Error; err != nil {
-		//return
-		return "", err
-	}
-	//return
 	return "Success", nil
 }

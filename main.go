@@ -10,9 +10,7 @@ import (
 	"time"
 
 	"resource-service/src/controller"
-	"resource-service/src/model"
 	"resource-service/utils/constants"
-	"resource-service/utils/database"
 	applogger "resource-service/utils/logging"
 
 	"github.com/gin-contrib/cors"
@@ -47,7 +45,6 @@ func main() {
 
 	setupLogger(r)
 	setupRoutes(r)
-	setupDatabase()
 	startServer(r)
 }
 
@@ -63,12 +60,6 @@ func loadConfig() {
 			log.Panic().Msgf("Error reading config file: %s\n", readErr)
 		}
 	}
-}
-
-// setupDatabase - Set up database
-func setupDatabase() {
-	database.GetInstance()
-	model.Migrate()
 }
 
 // startServer - Start server
@@ -139,7 +130,6 @@ func setupRoutes(r *gin.Engine) {
 				resource.POST(constants.GET_LIST_OF_RESOURCES_PATH, resourceController.GetListOfResources)
 				resource.POST(constants.GET_RESOURCE_PATH, resourceController.GetResource)
 				resource.POST(constants.EDIT_RESOURCE_PATH, resourceController.EditResource)
-				resource.POST(constants.DELETE_RESOURCE_PATH, resourceController.DeleteResource)
 			}
 		}
 	}

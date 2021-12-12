@@ -123,15 +123,3 @@ func (resource *ResourceService) EditResource(data dto.RequestEditResourceDTO) (
 
 	return resources, nil
 }
-
-//DeleteResource - Service to Delete Resource
-func (resource *ResourceService) DeleteResource(data dto.RequestDeleteResourceDTO) (string, error) {
-
-	//Calling DeleteResource Repository
-	resources, err := resourceRepository.DeleteResource(data)
-	if err != nil {
-		return "", err
-	}
-
-	return resources, nil
-}

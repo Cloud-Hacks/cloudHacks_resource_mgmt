@@ -190,24 +190,3 @@ func (resource *ResourceController) EditResource(c *gin.Context) {
 
 	response.SuccessWithMessage(c, resources)
 }
-
-//DeleteResource - Controller to Delete Resource
-func (resource *ResourceController) DeleteResource(c *gin.Context) {
-	//Bind json according to given structure
-	var data dto.RequestDeleteResourceDTO
-	if request.CheckJSON(c, &data) {
-		return // exit
-	}
-	//Validator to Check Request Body is correct or not
-	if request.CheckRequestBodyValidator(c, data) {
-		return // exit
-	}
-	//Calling DeleteResource Service
-	resources, err := resourceService.DeleteResource(data)
-	if err != nil {
-		//Returns Error Code 500
-		response.Send500(c, constants.ERROR_IN_DELETE_RESOURCE, err)
-		return // exit
-	}
-	response.SuccessWithMessage(c, resources)
-}
