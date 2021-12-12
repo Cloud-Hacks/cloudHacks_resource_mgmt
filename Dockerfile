@@ -1,13 +1,11 @@
-FROM artifactory.accuknox.com/accuknox/golang:1.17-alpine3.15 AS builder
-WORKDIR /home/resource-service
+FROM golang:1.16-alpine3.15 AS builder
+WORKDIR /home/resource-mgmt
 COPY . .
 RUN go mod tidy
 RUN GOOS=linux go build -o main .
 
-FROM artifactory.accuknox.com/accuknox/alpine:3.15
-WORKDIR /home/resource-service
-# ADD https://github.com/golang/go/raw/master/lib/time/zoneinfo.zip /zoneinfo.zip
-# ENV ZONEINFO /zoneinfo.zip
-# RUN apt-get update && apt-get install -y apt-transport-https ca-certificates
-COPY --from=builder /home/resource-service/main /home/resource-service/main
+FROM alpine:3.15
+WORKDIR /home/resource-mgmt
+
+COPY --from=builder /home/resource-mgmt/main /home/resource-mgmt/main
 CMD ["./main"]
