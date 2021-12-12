@@ -1,11 +1,16 @@
-FROM golang:1.16-alpine3.15 AS builder
-WORKDIR /home/resource-mgmt
+FROM golang:1.16 as builder
+
+WORKDIR /resource-mgmt-api
+
 COPY . .
+
 RUN go mod tidy
-RUN GOOS=linux go build -o main .
+RUN CGO_ENABLED=0 go build -o main .
 
 FROM alpine:3.15
-WORKDIR /home/resource-mgmt
 
-COPY --from=builder /home/resource-mgmt/main /home/resource-mgmt/main
+WORKDIR /resource-mgmt-api
+
+COPY --from=builder /resource-mgmt-api/. .
+
 CMD ["./main"]
