@@ -8,5 +8,4 @@ type User struct {
 	Password  string `json:"password"`
 	Email     string `json:"email"`
 	Role      string `json:"role"`
-	LastLogin int64  `json:"last_login"`
 }

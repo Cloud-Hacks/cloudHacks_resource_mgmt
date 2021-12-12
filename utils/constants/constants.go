@@ -8,7 +8,7 @@ const (
 	ADD_FILE_PATH              = "add-file"              //ADD_FILE_PATH - URL Path to Add File into the bucket
 	GET_FILE_PATH              = "get-file"              //GET_FILE_PATH - URL Path to Get File from the bucket
 	GET_LIST_OF_RESOURCES_PATH = "get-list-of-resources" //GET_LIST_OF_RESOURCES_PATH - URL Path to Get List of Resource
-	GET_RESOURCE_PATH          = "get-resource"          //GET_RESOURCE_PATH - URL Path to Get Resource
+	GET_RESOURCE_PATH          = "view-resource"         //GET_RESOURCE_PATH - URL Path to Get Resource
 	CHANGE_STATUS_PATH         = "change-status"         //CHANGE_STATUS_PATH - URL Path to Change Status of the resource
 	EDIT_RESOURCE_PATH         = "edit-resource"         //EDIT_RESOURCE_PATH - URL Path to Edit Resource
 	DELETE_RESOURCE_PATH       = "delete-resource"       //DELETE_RESOURCE_PATH - URL Path to Delete Resource

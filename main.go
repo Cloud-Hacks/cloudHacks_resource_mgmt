@@ -138,7 +138,6 @@ func setupRoutes(r *gin.Engine) {
 				resource.POST(constants.GET_FILE_PATH, resourceController.GetFile)
 				resource.POST(constants.GET_LIST_OF_RESOURCES_PATH, resourceController.GetListOfResources)
 				resource.POST(constants.GET_RESOURCE_PATH, resourceController.GetResource)
-				resource.POST(constants.CHANGE_STATUS_PATH, resourceController.ChangeStatus)
 				resource.POST(constants.EDIT_RESOURCE_PATH, resourceController.EditResource)
 				resource.POST(constants.DELETE_RESOURCE_PATH, resourceController.DeleteResource)
 			}

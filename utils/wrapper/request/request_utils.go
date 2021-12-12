@@ -9,7 +9,6 @@ import (
 	"resource-service/src/model"
 	"resource-service/src/service/dto"
 	"resource-service/utils/constants"
-	"resource-service/utils/database"
 	logger "resource-service/utils/logging"
 	"resource-service/utils/wrapper/response"
 
@@ -19,6 +18,11 @@ import (
 	"github.com/spf13/viper"
 	"gopkg.in/go-playground/validator.v9"
 )
+
+var usrdt = []model.User{
+	{ID: 1, FirstName: "Deter", LastName: "Fir", Email: "ety@k1.co", Password: "poetry@", Role: "Dev"},
+	{ID: 2, FirstName: "Peter", LastName: "Ge", Email: "frt@k1.co", Password: "yutr@12", Role: "Art"},
+}
 
 var log *zerolog.Logger = logger.GetInstance()
 
@@ -97,27 +101,34 @@ func CheckAuthorisedUser(c *gin.Context, data dto.RequestUserDTO) (interface{}, 
 	// hash.Write([]byte(data.Password))
 	// pwd := base64.URLEncoding.EncodeToString(hash.Sum(nil))
 
-	if err := database.GetInstance().Where("email = ? AND password = ?", data.Email, data.Password).First(&dt).Error; err != nil {
-		return " ", err
+	for _, u := range usrdt {
+		if u.Email == data.Email && u.Password == data.Password {
+
+			// if err := database.GetInstance().Where("email = ? AND password = ?", data.Email, data.Password).First(&dt).Error; err != nil {
+			// 	return " ", err
+			// }
+
+			//update the last_login
+			// dt.LastLogin = time.Now().UTC().Unix()
+			// database.GetInstance().Save(&dt)
+
+			expirationTime := time.Now().Add(90 * time.Second)
+
+			//access the token with the claims used for signing
+			token, err := AccessToken(dt.ID, dt.Email, expirationTime)
+
+			if err != nil {
+				c.JSON(http.StatusUnprocessableEntity, err.Error())
+				return " ", err
+			}
+
+			usrdt := GetResData(token)
+
+			return usrdt, nil
+		}
 	}
 
-	//update the last_login
-	dt.LastLogin = time.Now().UTC().Unix()
-	database.GetInstance().Save(&dt)
-
-	expirationTime := time.Now().Add(90 * time.Second)
-
-	//access the token with the claims used for signing
-	token, err := AccessToken(dt.ID, dt.Email, expirationTime)
-
-	if err != nil {
-		c.JSON(http.StatusUnprocessableEntity, err.Error())
-		return " ", err
-	}
-
-	usrdt := GetResData(token)
-
-	return usrdt, nil
+	return "Null User Data", nil
 
 }
 

@@ -2,6 +2,7 @@ package dto
 
 //RequestAddResourceDTO - DTO for add Resource Request
 type RequestAddResourceDTO struct {
+	ID         int      `json:"id" validate:"min=1"`
 	Title      string   `json:"title" validate:"required"`
 	Category   string   `json:"category" validate:"required"`
 	Status     string   `json:"status" validate:"required,oneof= Draft Published"`
@@ -64,29 +65,29 @@ type RequestChangeStatusDTO struct {
 
 //ResponseGetListOfResourcesDTO - DTO for Get Resource Response
 type ResponseGetResourceDTO struct {
-	ID         int      `json:"id"`
-	Title      string   `json:"title"`
-	Category   string   `json:"category"`
-	Status     string   `json:"status"`
-	Types      string   `json:"types"`
-	ImageLinks []string `json:"image_links"`
-	FileLink   string   `json:"file_link"`
-	Content    string   `json:"content"`
-	UpdatedBy  int      `json:"updated_by"`
-	UpdatedAt  int64    `json:"updated_at"`
+	ID         int    `json:"id"`
+	Title      string `json:"title"`
+	Category   string `json:"category"`
+	Status     string `json:"status"`
+	Types      string `json:"types"`
+	ImageLinks string `json:"image_links"`
+	FileLink   string `json:"file_link"`
+	Content    string `json:"content"`
+	UpdatedBy  int    `json:"updated_by"`
+	UpdatedAt  int64  `json:"updated_at"`
 }
 
 //RequestEditResourceDTO - DTO for Edit Resource
 type RequestEditResourceDTO struct {
-	ID         int      `json:"id" validate:"required"`
-	Title      string   `json:"title" validate:"required"`
-	Category   string   `json:"category" validate:"required"`
-	Type       string   `json:"type" validate:"oneof= Text PDF"`
-	Status     string   `json:"status" validate:"oneof= Draft Published"`
-	Content    string   `json:"content"`
-	ImageLinks []string `json:"image_links"`
-	FileLink   string   `json:"file_link"`
-	UpdatedBy  int      `json:"updated_by" validate:"required"`
+	ID         int    `json:"id" validate:"required"`
+	Title      string `json:"title" validate:"required"`
+	Category   string `json:"category" validate:"required"`
+	Type       string `json:"type" validate:"oneof= Text PDF"`
+	Status     string `json:"status" validate:"oneof= Draft Published"`
+	Content    string `json:"content"`
+	ImageLinks string `json:"image_links"`
+	FileLink   string `json:"file_link"`
+	UpdatedBy  int    `json:"updated_by" validate:"required"`
 }
 
 //RequestDeleteResourceDTO - DTO for Delete Resource

@@ -1,7 +1,6 @@
 package service
 
 import (
-	"errors"
 	"io"
 	"mime/multipart"
 
@@ -34,11 +33,6 @@ func (resource *ResourceService) AddResource(data dto.RequestAddResourceDTO) (st
 }
 
 func (resource *ResourceService) AddImageAndFile(c *gin.Context, mpf multipart.File, mpfh *multipart.FileHeader, folder string) (dto.ResponseAddFileDTO, error) {
-
-	//Check File Name is uniqure or not
-	if resourceRepository.UniqureFileName(folder, mpfh.Filename) {
-		return dto.ResponseAddFileDTO{}, errors.New(constants.ERROR_FILE_NAME_IS_NOT_UNIQUE)
-	}
 
 	//Define Bucket Name
 	bucket := viper.GetString("bucket.name")
@@ -116,19 +110,6 @@ func (resource *ResourceService) GetResource(data dto.RequestGetResourceDTO) (dt
 	}
 
 	return resources, nil
-}
-
-//ChangeStatus - Service to Change Resource Status
-func (resource *ResourceService) ChangeStatus(data dto.RequestChangeStatusDTO) (string, error) {
-
-	//Calling ChangeStatus Repository
-	msg, err := resourceRepository.ChangeStatus(data)
-
-	if err != nil {
-		return "", err
-	}
-
-	return msg, nil
 }
 
 //EditResource - Service to Edit Resource

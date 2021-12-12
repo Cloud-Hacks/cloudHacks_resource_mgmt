@@ -169,28 +169,6 @@ func (resource *ResourceController) GetResource(c *gin.Context) {
 	response.SuccessWithData(c, resources)
 }
 
-// ChangeStatus - Controller to Change Resource Status
-func (resource *ResourceController) ChangeStatus(c *gin.Context) {
-	//Bind json according to given structure
-	var data dto.RequestChangeStatusDTO
-	if request.CheckJSON(c, &data) {
-		return // exit
-	}
-	//Validator to Check Request Body is correct or not
-	if request.CheckRequestBodyValidator(c, data) {
-		return // exit
-	}
-	//Calling ChangeStatus Service
-	msg, err := resourceService.ChangeStatus(data)
-	if err != nil {
-		//Returns Error Code 500
-		response.Send500(c, constants.ERROR_IN_STATUS_CHANGE, err)
-		return // exit
-	}
-
-	response.SuccessWithMessage(c, msg)
-}
-
 //EditResource - Controller to Edit Resource
 func (resource *ResourceController) EditResource(c *gin.Context) {
 	//Bind json according to given structure
