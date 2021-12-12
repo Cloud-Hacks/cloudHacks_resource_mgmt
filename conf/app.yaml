@@ -1,0 +1,20 @@
+# Server configurations
+server:
+  port: :8080
+  basepath: /resource-service
+
+logging:
+  level: DEBUG
+
+database:
+  dbname: resources
+  host: 127.0.0.1
+  port: 3306
+  user: saan
+  password: Hiclass@12
+
+bucket:
+  name: accuknox-website
+
+access_secret:
+  code: "jdnfksdmfksd"
