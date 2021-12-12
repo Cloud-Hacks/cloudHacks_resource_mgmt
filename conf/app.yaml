@@ -6,15 +6,8 @@ server:
 logging:
   level: DEBUG
 
-database:
-  dbname: resources
-  host: 127.0.0.1
-  port: 3306
-  user: saan
-  password: Hiclass@12
-
 bucket:
-  name: accuknox-website
+  name: res_mgmt-web
 
 access_secret:
   code: "jdnfksdmfksd"
