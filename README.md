@@ -22,3 +22,14 @@ Kubernetes networking, CI/CD configuration with Devtron tools.
 
 ## What's next for Resource Management APP
 To integrate with UI and setup multi repos for our APP using Devtron tools
+
+## ScreenShots
+
+
+![c4](https://user-images.githubusercontent.com/94980910/145726737-943dad92-18df-45a5-a053-5973b18ef005.png)
+
+
+![c5](https://user-images.githubusercontent.com/94980910/145726749-7cf221db-28d0-4e4a-92c3-9e197bc019be.png)
+
+
+![c6](https://user-images.githubusercontent.com/94980910/145726754-46bacd09-8fb2-41f6-a0d4-81b75778dd79.png)
