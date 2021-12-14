@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: res-mgmt-api
-        image: afzal442/res_mgmt_api:v1
+        image: afzal442/resmgmnt-api:v1
         ports:
         - containerPort: 8080
 
