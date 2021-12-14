@@ -1,12 +1,14 @@
 package service
 
 import (
+	"fmt"
 	"io"
 	"mime/multipart"
 
 	"resource-service/src/repository"
 	"resource-service/src/service/dto"
 	"resource-service/utils/constants"
+	"resource-service/utils/wrapper/request"
 
 	"cloud.google.com/go/storage"
 	"github.com/gin-gonic/gin"
@@ -22,14 +24,23 @@ type ResourceService struct {
 var resourceRepository repository.ResourceRepository = repository.ResourceRepository{}
 
 //AddResource - Service to Add Resource
-func (resource *ResourceService) AddResource(data dto.RequestAddResourceDTO) (string, error) {
-	//Calling AddResource Repository
-	msg, err := resourceRepository.AddResource(data)
-	if err != nil {
-		return "", err
-	}
+func (resource *ResourceService) AddResource(data dto.RequestAddResourceDTO, token string) (string, error) {
 
-	return msg, nil
+	UId, err := request.GetUId(token)
+	if err != nil {
+		return "Invalid Token", err
+	}
+	fmt.Println(UId, data.ID)
+	if UId == data.ID {
+		//Calling AddResource Repository
+		msg, err := resourceRepository.AddResource(data)
+		if err != nil {
+			return "", err
+		}
+
+		return msg, nil
+	}
+	return "Invalid Access", err
 }
 
 func (resource *ResourceService) AddImageAndFile(c *gin.Context, mpf multipart.File, mpfh *multipart.FileHeader, folder string) (dto.ResponseAddFileDTO, error) {
@@ -101,15 +112,24 @@ func (resource *ResourceService) GetListOfResources(data dto.RequestGetListOfRes
 }
 
 //GetResource - Service to Get Resource
-func (resource *ResourceService) GetResource(data dto.RequestGetResourceDTO) (dto.ResponseGetResourceDTO, error) {
+func (resource *ResourceService) GetResource(data dto.RequestGetResourceDTO, token string) (dto.ResponseGetResourceDTO, error) {
 
-	//Calling GetListOfResources Repository
-	resources, err := resourceRepository.GetResource(data)
+	UId, err := request.GetUId(token)
 	if err != nil {
 		return dto.ResponseGetResourceDTO{}, err
 	}
 
-	return resources, nil
+	if UId == data.ID {
+		//Calling GetListOfResources Repository
+		resources, err := resourceRepository.GetResource(data)
+		if err != nil {
+			return dto.ResponseGetResourceDTO{}, err
+		}
+
+		return resources, nil
+	}
+	return dto.ResponseGetResourceDTO{}, err
+
 }
 
 //EditResource - Service to Edit Resource

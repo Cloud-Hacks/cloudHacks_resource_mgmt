@@ -17,6 +17,6 @@ func SuccessWithMessage(c *gin.Context, msg string) {
 
 //SuccessWithData - Return expected Data
 func SuccessWithData(c *gin.Context, msg interface{}) {
-	c.JSON(http.StatusOK, msg)
+	c.JSON(http.StatusOK, gin.H{"jwt": msg})
 
 }

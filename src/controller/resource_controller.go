@@ -31,8 +31,11 @@ func (resource *ResourceController) AddResource(c *gin.Context) {
 	if request.CheckRequestBodyValidator(c, data) {
 		return // exit
 	}
+
+	acc_token := temp.tk
+
 	//Calling AddResource Service
-	msg, err := resourceService.AddResource(data)
+	msg, err := resourceService.AddResource(data, acc_token)
 	if err != nil {
 
 		//Returns Error Code 500
@@ -159,8 +162,10 @@ func (resource *ResourceController) GetResource(c *gin.Context) {
 	if request.CheckRequestBodyValidator(c, data) {
 		return // exit
 	}
+
+	acc_token := temp.tk
 	//Calling GetListOfResources Service
-	resources, err := resourceService.GetResource(data)
+	resources, err := resourceService.GetResource(data, acc_token)
 	if err != nil {
 		//Returns Error Code 500
 		response.Send500(c, constants.ERROR_IN_GET_RESOURCE, err)

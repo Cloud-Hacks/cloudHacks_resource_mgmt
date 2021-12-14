@@ -13,7 +13,10 @@ import (
 
 //LoginController - Login Controller
 type LoginController struct {
+	tk string
 }
+
+var temp LoginController
 
 // var userService = &service.UserService{}
 
@@ -32,6 +35,8 @@ func (user *LoginController) LoginUser(c *gin.Context) {
 	}
 
 	dt, err := request.CheckAuthorisedUser(c, data)
+
+	temp.tk = dt
 
 	// Returns Error Code 404
 	if err != nil {
