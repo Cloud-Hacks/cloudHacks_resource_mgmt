@@ -17,7 +17,7 @@ var res = []model.Resource{
 }
 
 var img_resource = []model.Image{
-	{ID: 1, ResourceId: 2, Link: "/gty.jpg", Status: "Draft", CreatedBy: 43, UpdatedBy: 23},
+	{ID: 1, ResourceId: 1, Link: "/gty.jpg", Status: "Draft", CreatedBy: 43, UpdatedBy: 23},
 }
 
 //ResourceRepository- Resource Repository

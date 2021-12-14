@@ -19,7 +19,7 @@ import (
 	"gopkg.in/go-playground/validator.v9"
 )
 
-var usrdt = []model.User{
+var usrdto = []model.User{
 	{ID: 1, FirstName: "Deter", LastName: "Fir", Email: "ety@k1.co", Password: "poetry@", Role: "Dev"},
 	{ID: 2, FirstName: "Peter", LastName: "Ge", Email: "frt@k1.co", Password: "yutr@12", Role: "Art"},
 }
@@ -93,7 +93,7 @@ func ValidateFileExtension(c *gin.Context, filename string) bool {
 }
 
 //Authenticate and Authorise the user request with the provided credentials
-func CheckAuthorisedUser(c *gin.Context, data dto.RequestUserDTO) (interface{}, error) {
+func CheckAuthorisedUser(c *gin.Context, data dto.RequestUserDTO) (string, error) {
 
 	// Encode the password
 	// hash := sha512.New()
@@ -101,7 +101,9 @@ func CheckAuthorisedUser(c *gin.Context, data dto.RequestUserDTO) (interface{}, 
 	// hash.Write([]byte(data.Password))
 	// pwd := base64.URLEncoding.EncodeToString(hash.Sum(nil))
 
-	for _, u := range usrdt {
+	var Id int
+
+	for _, u := range usrdto {
 		if u.Email == data.Email && u.Password == data.Password {
 
 			// if err := database.GetInstance().Where("email = ? AND password = ?", data.Email, data.Password).First(&dt).Error; err != nil {
@@ -114,8 +116,10 @@ func CheckAuthorisedUser(c *gin.Context, data dto.RequestUserDTO) (interface{}, 
 
 			expirationTime := time.Now().Add(90 * time.Second)
 
+			Id = u.ID
+
 			//access the token with the claims used for signing
-			token, err := AccessToken(dt.ID, dt.Email, expirationTime)
+			token, err := AccessToken(Id, dt.Email, expirationTime)
 
 			if err != nil {
 				c.JSON(http.StatusUnprocessableEntity, err.Error())
@@ -151,11 +155,37 @@ func AccessToken(userId int, userEmail string, expTime time.Time) (string, error
 }
 
 // Get the User Data to response user
-func GetResData(token string) interface{} {
+func GetResData(token string) string {
 
-	UsrDt := &dto.ResponseLogin{
-		JWT: token,
+	return token
+}
+
+func GetUId(jwtoken string) (int, error) {
+
+	token, err := jwt.ParseWithClaims(jwtoken, claims, func(token *jwt.Token) (interface{}, error) {
+		// if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+		// 	return nil, fmt.Errorf("There was an error")
+		// }
+		return []byte(ACCESS_SECRET), nil
+	})
+
+	if err != nil {
+		return -1, err
+	}
+	if _, ok := token.Claims.(*Claims); ok && token.Valid {
+		// c.JSON(http.StatusOK, gin.H{"message": "success"})
+		return claims.UID, nil
+	} else {
+		// c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return -1, err
 	}
 
-	return UsrDt
+	// token, _, err := new(jwt.Parser).ParseUnverified(jwtoken, jwt.StandardClaims{})
+	// if err != nil {
+	// 	return " ", err
+	// }
+
+	// if claims, ok := token.Claims.(jwt.StandardClaims); ok {
+	// 	UId = fmt.Sprintf("%v", claims.Issuer)
+	// }
 }
