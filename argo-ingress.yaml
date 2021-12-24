@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: res-mgmt-api-ingress
+  namespace: clh
+  labels:
+    app: res-mgmt-api
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: res-mgmt.92ebbadb-2295-4ddd-9bf8-f9d00f233d62.k8s.civo.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: res-mgmt-api-deployment
+          servicePort: 5000

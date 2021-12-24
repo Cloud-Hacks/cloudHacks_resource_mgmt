@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+metadata:
+  name: res-mgmt-api-deployment
+spec:
+  destination:
+    namespace: clh
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s-specifications
+    repoURL: 'https://github.com/Cloud-Hacks/cloudHacks_resource_mgmt'
+    targetRevision: HEAD
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
