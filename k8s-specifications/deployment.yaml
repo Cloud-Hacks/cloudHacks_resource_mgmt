@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: res-mgmt-api-deployment
+  namespace: clh
   labels:
     app: res-mgmt-api
 spec:

@@ -15,4 +15,4 @@ spec:
       - path: /
         backend:
           serviceName: res-mgmt-api-deployment
-          servicePort: 5000
+          servicePort: 8080
