@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: install twilio
-        run: pip install twilio
+        run: npm install twilio
       - name: run code
         run: node index.js
         env:
