@@ -11,7 +11,7 @@ jobs:
       - name: install twilio
         run: pip install twilio
       - name: run code
-        run: go run main.go
+        run: node index.js
         env:
           account_sid: ${{ secrets.ACCOUNT_SID }}
           auth_token: ${{ secrets.AUTH_TOKEN }}
