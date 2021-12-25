@@ -13,6 +13,7 @@ spec:
     http:
       paths:
       - path: /
+        pathType: "Prefix"
         backend:
           serviceName: res-mgmt-api-deployment
           servicePort: 8080

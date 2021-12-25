@@ -1,6 +1,6 @@
 apiVersion: argoproj.io/v1alpha1
 metadata:
-  name: res-mgmt-api-deployment
+  name: res-mgmt-api
 spec:
   destination:
     namespace: clh
