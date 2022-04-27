@@ -1,4 +1,4 @@
-# Server configurations
+# Server configurations file
 server:
   port: :8080
   basepath: /resource-service
