@@ -6,8 +6,8 @@ server:
 logging:
   level: DEBUG
 
-bucket:
-  name: res_mgmt-web
+# bucket:
+#   name: res_mgmt-web
 
 access_secret:
   code: "jdnfksdmfksd"
