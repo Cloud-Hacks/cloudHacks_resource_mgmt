@@ -124,12 +124,12 @@ func setupRoutes(r *gin.Engine) {
 			{
 				resource.POST(constants.LOGIN_USER_PATH, loginController.LoginUser)
 				resource.POST(constants.ADD_RESOURCE_PATH, resourceController.AddResource)
-				resource.POST(constants.ADD_IMAGE_PATH, resourceController.AddImage)
-				resource.POST(constants.ADD_FILE_PATH, resourceController.AddFile)
+// 				resource.POST(constants.ADD_IMAGE_PATH, resourceController.AddImage)
+// 				resource.POST(constants.ADD_FILE_PATH, resourceController.AddFile)
 				resource.POST(constants.GET_FILE_PATH, resourceController.GetFile)
 				resource.POST(constants.GET_LIST_OF_RESOURCES_PATH, resourceController.GetListOfResources)
 				resource.POST(constants.GET_RESOURCE_PATH, resourceController.GetResource)
-				resource.POST(constants.EDIT_RESOURCE_PATH, resourceController.EditResource)
+// 				resource.POST(constants.EDIT_RESOURCE_PATH, resourceController.EditResource)
 			}
 		}
 	}
