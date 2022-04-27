@@ -1,7 +1,7 @@
 # Resource-Mgmt-APIService
 
 ## Inspiration
-Inspired by CIVO kubernetes and CI/CD pipelines using Devtron tool
+Inspired by CIVO kubernetes and CI/CD pipelines using Devtron OS tool
 
 ## What it does
 Our API enables you to make use of managing and accessing your resources for storing PDF, TXT files and images [Blogs]
