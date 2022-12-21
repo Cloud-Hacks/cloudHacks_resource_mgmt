@@ -33,3 +33,5 @@ To integrate with UI and setup multi repos for our APP using Devtron tools
 
 
 ![c6](https://user-images.githubusercontent.com/94980910/145726754-46bacd09-8fb2-41f6-a0d4-81b75778dd79.png)
+
+For more details about this project as part of Hackathon, you can visit my [link](https://devpost.com/software/resource-management-app)
